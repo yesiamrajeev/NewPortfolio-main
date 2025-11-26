@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link rel="icon" href="./img/pic.png" type="image/x-icon">
-    <link rel="shortcut icon" href="./img/pic.png" type="image/x-icon">
+  <link rel="shortcut icon" href="./img/pic.png" type="image/x-icon">
   <!-- <link rel="stylesheet" href="./index.css"> -->
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -15,6 +15,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <style>
     :root {
       --bg: #050017;
@@ -1295,162 +1297,226 @@
         grid-template-columns: 1fr;
       }
     }
-/* === Combined Neon Cursor + Aura === */
-@media (pointer: fine) {
-  body { cursor: none !important; }
-}
 
-/* === Combined Neon Cursor + Aura === */
-@media (pointer: fine) {
-  body { cursor: none !important; }
-}
+    /* === Combined Neon Cursor + Aura === */
+    @media (pointer: fine) {
+      body {
+        cursor: none !important;
+      }
+    }
 
-/* cursor core + ring */
-#custom-cursor { position: fixed; left:0; top:0; width:14px; height:14px; border-radius:50%;
-  pointer-events:none; background: radial-gradient(circle, #fff, #ffe6ff 40%, #c26bff 100%);
-  box-shadow: 0 0 30px rgba(194,107,255,0.22), 0 0 60px rgba(109,214,255,0.08);
-  transform: translate(-50%,-50%); z-index:99999; transition: transform 120ms ease-out, opacity 220ms; }
+    /* === Combined Neon Cursor + Aura === */
+    @media (pointer: fine) {
+      body {
+        cursor: none !important;
+      }
+    }
 
-#custom-cursor-ring { position: fixed; left:0; top:0; width:44px; height:44px; border-radius:50%;
-  border:2px solid rgba(194,107,255,0.42); pointer-events:none; transform:translate(-50%,-50%); z-index:99998;
-  box-shadow: 0 8px 40px rgba(194,107,255,0.08); transition: transform 180ms cubic-bezier(.2,.9,.25,1), border-color 180ms, box-shadow 180ms; mix-blend-mode:screen; }
+    /* cursor core + ring */
+    #custom-cursor {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, #fff, #ffe6ff 40%, #c26bff 100%);
+      box-shadow: 0 0 30px rgba(194, 107, 255, 0.22), 0 0 60px rgba(109, 214, 255, 0.08);
+      transform: translate(-50%, -50%);
+      z-index: 99999;
+      transition: transform 120ms ease-out, opacity 220ms;
+    }
 
-/* aura / large moving soft glow */
-#cursor-aura { position: fixed; left:0; top:0; pointer-events:none; z-index:2;
-  width:700px; height:700px; transform:translate(-50%,-50%); border-radius:50%;
-  background: radial-gradient(circle at 40% 30%, rgba(194,107,255,0.16), rgba(109,214,255,0.06) 32%, transparent 55%);
-  filter: blur(48px); transition: transform 160ms linear, opacity 220ms; opacity:0.95; mix-blend-mode:screen; }
+    #custom-cursor-ring {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid rgba(194, 107, 255, 0.42);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 99998;
+      box-shadow: 0 8px 40px rgba(194, 107, 255, 0.08);
+      transition: transform 180ms cubic-bezier(.2, .9, .25, 1), border-color 180ms, box-shadow 180ms;
+      mix-blend-mode: screen;
+    }
 
-/* hover / interactive scale */
-body.cursor-interactive #custom-cursor-ring { transform: translate(-50%,-50%) scale(1.6); border-color: rgba(109,214,255,0.95); box-shadow: 0 16px 80px rgba(109,214,255,0.14); }
+    /* aura / large moving soft glow */
+    #cursor-aura {
+      position: fixed;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      z-index: 2;
+      width: 700px;
+      height: 700px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 30%, rgba(194, 107, 255, 0.16), rgba(109, 214, 255, 0.06) 32%, transparent 55%);
+      filter: blur(48px);
+      transition: transform 160ms linear, opacity 220ms;
+      opacity: 0.95;
+      mix-blend-mode: screen;
+    }
 
-/* active (pointer down) feedback */
-body.cursor-active #custom-cursor { transform: translate(-50%,-50%) scale(0.85); opacity:0.9; }
-body.cursor-active #custom-cursor-ring { transform: translate(-50%,-50%) scale(0.9); opacity:0.9; }
+    /* hover / interactive scale */
+    body.cursor-interactive #custom-cursor-ring {
+      transform: translate(-50%, -50%) scale(1.6);
+      border-color: rgba(109, 214, 255, 0.95);
+      box-shadow: 0 16px 80px rgba(109, 214, 255, 0.14);
+    }
 
-/* hide on touch / coarse pointers */
-@media (pointer: coarse), (hover: none) {
-  #custom-cursor, #custom-cursor-ring, #cursor-aura { display:none !important; }
-  body { cursor: default !important; }
-}
+    /* active (pointer down) feedback */
+    body.cursor-active #custom-cursor {
+      transform: translate(-50%, -50%) scale(0.85);
+      opacity: 0.9;
+    }
 
-/* accessibility: prefers-reduced-motion disables fancy transitions */
-@media (prefers-reduced-motion: reduce) {
-  #custom-cursor, #custom-cursor-ring, #cursor-aura { display:none !important; }
-  body { cursor: default !important; }
-}
+    body.cursor-active #custom-cursor-ring {
+      transform: translate(-50%, -50%) scale(0.9);
+      opacity: 0.9;
+    }
 
+    /* hide on touch / coarse pointers */
+    @media (pointer: coarse),
+    (hover: none) {
 
+      #custom-cursor,
+      #custom-cursor-ring,
+      #cursor-aura {
+        display: none !important;
+      }
 
+      body {
+        cursor: default !important;
+      }
+    }
+
+    /* accessibility: prefers-reduced-motion disables fancy transitions */
+    @media (prefers-reduced-motion: reduce) {
+
+      #custom-cursor,
+      #custom-cursor-ring,
+      #cursor-aura {
+        display: none !important;
+      }
+
+      body {
+        cursor: default !important;
+      }
+    }
   </style>
 </head>
 
 <body>
   <!-- Custom cursor + aura (paste once) -->
-<div id="custom-cursor" aria-hidden="true"></div>
-<div id="custom-cursor-ring" aria-hidden="true"></div>
-<div id="cursor-aura" aria-hidden="true"></div>
+  <div id="custom-cursor" aria-hidden="true"></div>
+  <div id="custom-cursor-ring" aria-hidden="true"></div>
+  <div id="cursor-aura" aria-hidden="true"></div>
 
 
-<script>
-  /* Combined neon cursor + aura script (paste once) */
-(function () {
-  // Respect user preferences and coarse pointer (phones)
-  if (window.matchMedia && (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-      window.matchMedia('(pointer: coarse)').matches)) {
-    return;
-  }
+  <script>
+    /* Combined neon cursor + aura script (paste once) */
+    (function () {
+      // Respect user preferences and coarse pointer (phones)
+      if (window.matchMedia && (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        window.matchMedia('(pointer: coarse)').matches)) {
+        return;
+      }
 
-  const cursor = document.getElementById('custom-cursor');
-  const ring = document.getElementById('custom-cursor-ring');
-  const aura = document.getElementById('cursor-aura');
-  if (!cursor || !ring || !aura) return;
+      const cursor = document.getElementById('custom-cursor');
+      const ring = document.getElementById('custom-cursor-ring');
+      const aura = document.getElementById('cursor-aura');
+      if (!cursor || !ring || !aura) return;
 
-  // state
-  let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  let ringPos = { x: mouse.x, y: mouse.y };
-  const ringEase = 0.16; // lower = snappier, higher = lazier
+      // state
+      let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      let ringPos = { x: mouse.x, y: mouse.y };
+      const ringEase = 0.16; // lower = snappier, higher = lazier
 
-  // keep sizes responsive for aura on small widths
-  function updateAuraSize() {
-    const w = Math.max(400, Math.min(window.innerWidth * 0.7, 900));
-    aura.style.width = w + 'px';
-    aura.style.height = w + 'px';
-  }
-  updateAuraSize();
-  window.addEventListener('resize', updateAuraSize);
+      // keep sizes responsive for aura on small widths
+      function updateAuraSize() {
+        const w = Math.max(400, Math.min(window.innerWidth * 0.7, 900));
+        aura.style.width = w + 'px';
+        aura.style.height = w + 'px';
+      }
+      updateAuraSize();
+      window.addEventListener('resize', updateAuraSize);
 
-  // pointer move — update target mouse
-  function onPointerMove(e) {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-    // position small cursor immediately for perceived latency improvement
-    cursor.style.left = mouse.x + 'px';
-    cursor.style.top = mouse.y + 'px';
-    // tilt aura slightly offset for depth
-    aura.style.left = (mouse.x + 80) + 'px';
-    aura.style.top = (mouse.y + 40) + 'px';
-  }
-  window.addEventListener('pointermove', onPointerMove, { passive: true });
+      // pointer move — update target mouse
+      function onPointerMove(e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        // position small cursor immediately for perceived latency improvement
+        cursor.style.left = mouse.x + 'px';
+        cursor.style.top = mouse.y + 'px';
+        // tilt aura slightly offset for depth
+        aura.style.left = (mouse.x + 80) + 'px';
+        aura.style.top = (mouse.y + 40) + 'px';
+      }
+      window.addEventListener('pointermove', onPointerMove, { passive: true });
 
-  // requestAnimationFrame loop to ease ring
-  let rafId;
-  function frame() {
-    // ease ring towards mouse
-    ringPos.x += (mouse.x - ringPos.x) * ringEase;
-    ringPos.y += (mouse.y - ringPos.y) * ringEase;
-    ring.style.left = ringPos.x + 'px';
-    ring.style.top = ringPos.y + 'px';
-    // slow subtle transform for aura for 'follow' effect
-    // small transform to avoid heavy layout: use translate via style.transform
-    const auraOffsetX = (mouse.x - window.innerWidth / 2) * 0.02;
-    const auraOffsetY = (mouse.y - window.innerHeight / 2) * 0.02;
-    aura.style.transform = `translate(calc(-50% + ${auraOffsetX}px), calc(-50% + ${auraOffsetY}px))`;
-    rafId = requestAnimationFrame(frame);
-  }
-  rafId = requestAnimationFrame(frame);
+      // requestAnimationFrame loop to ease ring
+      let rafId;
+      function frame() {
+        // ease ring towards mouse
+        ringPos.x += (mouse.x - ringPos.x) * ringEase;
+        ringPos.y += (mouse.y - ringPos.y) * ringEase;
+        ring.style.left = ringPos.x + 'px';
+        ring.style.top = ringPos.y + 'px';
+        // slow subtle transform for aura for 'follow' effect
+        // small transform to avoid heavy layout: use translate via style.transform
+        const auraOffsetX = (mouse.x - window.innerWidth / 2) * 0.02;
+        const auraOffsetY = (mouse.y - window.innerHeight / 2) * 0.02;
+        aura.style.transform = `translate(calc(-50% + ${auraOffsetX}px), calc(-50% + ${auraOffsetY}px))`;
+        rafId = requestAnimationFrame(frame);
+      }
+      rafId = requestAnimationFrame(frame);
 
-  // hover interactions: enlarge ring when hovering interactive elements
-  function setInteractive(on) {
-    document.body.classList.toggle('cursor-interactive', on);
-  }
-  const interactiveSelector = 'a, button, input, textarea, select, .card, .project-info-card, .nav-link';
-  document.querySelectorAll(interactiveSelector).forEach(el => {
-    el.addEventListener('pointerenter', () => setInteractive(true));
-    el.addEventListener('pointerleave', () => setInteractive(false));
-  });
+      // hover interactions: enlarge ring when hovering interactive elements
+      function setInteractive(on) {
+        document.body.classList.toggle('cursor-interactive', on);
+      }
+      const interactiveSelector = 'a, button, input, textarea, select, .card, .project-info-card, .nav-link';
+      document.querySelectorAll(interactiveSelector).forEach(el => {
+        el.addEventListener('pointerenter', () => setInteractive(true));
+        el.addEventListener('pointerleave', () => setInteractive(false));
+      });
 
-  // pointerdown feedback
-  function onDown() {
-    document.body.classList.add('cursor-active');
-  }
-  function onUp() {
-    document.body.classList.remove('cursor-active');
-  }
-  window.addEventListener('pointerdown', onDown, { passive: true });
-  window.addEventListener('pointerup', onUp, { passive: true });
+      // pointerdown feedback
+      function onDown() {
+        document.body.classList.add('cursor-active');
+      }
+      function onUp() {
+        document.body.classList.remove('cursor-active');
+      }
+      window.addEventListener('pointerdown', onDown, { passive: true });
+      window.addEventListener('pointerup', onUp, { passive: true });
 
-  // cleanup on pagehide/unload
-  window.addEventListener('pagehide', () => {
-    cancelAnimationFrame(rafId);
-    window.removeEventListener('pointermove', onPointerMove);
-  });
+      // cleanup on pagehide/unload
+      window.addEventListener('pagehide', () => {
+        cancelAnimationFrame(rafId);
+        window.removeEventListener('pointermove', onPointerMove);
+      });
 
-  // ensure cursor is hidden when pointer leaves window (nice touch)
-  window.addEventListener('pointerleave', () => {
-    cursor.style.opacity = '0';
-    ring.style.opacity = '0';
-    aura.style.opacity = '0';
-  });
-  window.addEventListener('pointerenter', () => {
-    cursor.style.opacity = '';
-    ring.style.opacity = '';
-    aura.style.opacity = '';
-  });
+      // ensure cursor is hidden when pointer leaves window (nice touch)
+      window.addEventListener('pointerleave', () => {
+        cursor.style.opacity = '0';
+        ring.style.opacity = '0';
+        aura.style.opacity = '0';
+      });
+      window.addEventListener('pointerenter', () => {
+        cursor.style.opacity = '';
+        ring.style.opacity = '';
+        aura.style.opacity = '';
+      });
 
-})();
+    })();
 
-</script>
+  </script>
   <!-- NAVBAR -->
   <header class="nav" id="top-nav">
     <div class="nav-inner">
@@ -1727,7 +1793,7 @@ body.cursor-active #custom-cursor-ring { transform: translate(-50%,-50%) scale(0
         </div>
       </div>
 
-     
+
     </section>
 
 
@@ -1905,21 +1971,30 @@ body.cursor-active #custom-cursor-ring { transform: translate(-50%,-50%) scale(0
             Hurryyyy up!!! Drop me a message! Whether it&rsquo;s a project idea,
             collaboration, or just a hello, I&rsquo;d love to hear from you.
           </p>
-          <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks for reaching out!');">
+
+          <!-- success alert -->
+          <div class="alert"
+            style="display:none; background: linear-gradient(90deg,#10b981,#6dd6ff); color:#021; padding:10px 12px; border-radius:10px; margin-bottom:12px; font-weight:600;">
+            Message sent — thanks! I&rsquo;ll get back to you soon.
+          </div>
+
+          <form id="contactForm" class="contact-form" autocomplete="on">
             <label for="name">Name</label>
-            <input id="name" type="text" placeholder="Your name" />
+            <input id="name" name="name" type="text" placeholder="Your name" required />
 
-            <label for="email-input">Email</label>
-            <input id="email-input" type="email" placeholder="you@example.com" />
+            <label for="emailid">Email</label>
+            <input id="emailid" name="emailid" type="email" placeholder="you@example.com" required />
 
-            <label for="message">Message</label>
-            <textarea id="message" rows="4" placeholder="Tell me about your idea..."></textarea>
+            <label for="msgContent">Message</label>
+            <textarea id="msgContent" name="msgContent" rows="4" placeholder="Tell me about your idea..."
+              required></textarea>
 
-            <button type="submit">
+            <button id="contactSubmit" type="submit">
               Send message
             </button>
           </form>
         </div>
+
       </div>
 
       <footer>
@@ -1927,8 +2002,156 @@ body.cursor-active #custom-cursor-ring { transform: translate(-50%,-50%) scale(0
       </footer>
     </section>
   </main>
+<!-- Firebase (compat) SDKs - paste before your form script (one time) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+<script>
+/* ====== FORM + FIREBASE: ready-to-paste script ====== */
+(function () {
+  // ---------- config (use your existing config) ----------
+  const firebaseConfig = {
+    apiKey: "AIzaSyASYIx-1VTxdKXHYBnZA2LLLQFgnrYUya0",
+    authDomain: "portfolio-2a7b9.firebaseapp.com",
+    databaseURL: "https://portfolio-2a7b9-default-rtdb.firebaseio.com",
+    projectId: "portfolio-2a7b9",
+    storageBucket: "portfolio-2a7b9.appspot.com",
+    messagingSenderId: "598365410181",
+    appId: "1:598365410181:web:972b00285c63054b53aaec",
+    measurementId: "G-L9JJF5KW1C"
+  };
+
+  // ---------- initialize Firebase (only once) ----------
+  if (!window.firebase || !firebase.apps || firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  // ---------- DOM references ----------
+  const contactForm = document.getElementById("contactForm");
+  const submitBtn = document.getElementById("contactSubmit");
+  const alertBox = document.querySelector(".alert");
+
+  if (!contactForm) {
+    console.warn("contactForm element not found - check the ID");
+    return;
+  }
+
+  // DB ref
+  const contactFormDB = firebase.database().ref("contactForm");
+
+  // small helper
+  function getElementVal(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : "";
+  }
+
+  // optional: basic email pattern
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  // submit handler
+  contactForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const name = getElementVal("name");
+    const emailid = getElementVal("emailid");
+    const msgContent = getElementVal("msgContent");
+
+    // basic validation
+    if (!name || !emailid || !msgContent) {
+      // small visual feedback: shake the empty form slightly
+      contactForm.classList.add("shake");
+      setTimeout(() => contactForm.classList.remove("shake"), 400);
+      alert("Please fill in all fields.");
+      return;
+    }
+    if (!isValidEmail(emailid)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // disable submit button to prevent duplicate sends
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = "0.7";
+    const prevText = submitBtn.textContent;
+    submitBtn.textContent = "Sending...";
+// helper — returns "dd:mm:yyyy HH:MM:SS"
+function formattedNow24() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  const day = pad(d.getDate());
+  const month = pad(d.getMonth() + 1);
+  const year = d.getFullYear();
+  const hours = pad(d.getHours());      // 24-hour
+  const mins = pad(d.getMinutes());
+  const secs = pad(d.getSeconds());
+  return `Date: ${day}:${month}:${year}  Time: ${hours}:${mins}:${secs}`;
+}
+
+    try {
+      // push to firebase
+      const newContactRef = contactFormDB.push();
+      await newContactRef.set({
+  name,
+  emailid,
+  msgContent,
+  timestamp: formattedNow24()
+});
+
+
+      // clear fields instantly
+      contactForm.reset();
+
+      // show success alert
+      if (alertBox) {
+        alertBox.style.display = "block";
+        // gentle flash animation
+        alertBox.style.opacity = "0";
+        requestAnimationFrame(() => (alertBox.style.opacity = "1"));
+        setTimeout(() => {
+          // hide after 3s
+          alertBox.style.opacity = "0";
+          setTimeout(() => (alertBox.style.display = "none"), 240);
+        }, 3000);
+      } else {
+        // fallback native alert
+        alert("Message sent — thanks! I’ll get back to you soon.");
+      }
+    } catch (err) {
+      console.error("Firebase write failed:", err);
+      alert("Message not sent. Please try again.");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = "";
+      submitBtn.textContent = prevText || "Send message";
+    }
+  });
+
+  // optional small CSS-in-JS for shake animation used above (if you don't have it)
+  (function addShakeStyle() {
+    if (document.getElementById("__form-shake-style")) return;
+    const s = document.createElement("style");
+    s.id = "__form-shake-style";
+    s.textContent = `
+      @keyframes __form-shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-6px); }
+        50% { transform: translateX(6px); }
+        75% { transform: translateX(-4px); }
+        100% { transform: translateX(0); }
+      }
+      form.contact-form.shake {
+        animation: __form-shake 380ms ease;
+      }
+    `;
+    document.head.appendChild(s);
+  })();
+})();
+</script>
 
   <script>
+    
     // current year
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -2070,7 +2293,7 @@ body.cursor-active #custom-cursor-ring { transform: translate(-50%,-50%) scale(0
         });
       }
     })();
-    
+
 
     /* --------------------------
        Minor performance note:
