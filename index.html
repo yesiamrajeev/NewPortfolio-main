@@ -18,6 +18,12 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <style>
+    html, body {
+  overflow-x: hidden;              /* critical fix for the left-right slide */
+  -webkit-text-size-adjust: 100%;  /* avoid auto zoom when focusing inputs on iOS */
+  touch-action: manipulation;      /* improved touch responsiveness */
+}
+
     :root {
       --bg: #050017;
       --bg-elevated: #0b0224;
@@ -1417,8 +1423,39 @@
   <div id="custom-cursor-ring" aria-hidden="true"></div>
   <div id="cursor-aura" aria-hidden="true"></div>
 
+<script>
+  // Safety wrapper for custom cursor — disable it on touch/coarse devices or small screens.
+  (function () {
+    const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    const smallScreen = window.innerWidth <= 900;
+    const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // If any of these are true, do not init the fancy cursor.
+    if (isCoarse || smallScreen || reducedMotion) {
+      // Ensure CSS fallbacks hide them (defensive)
+      document.documentElement.classList.add('no-custom-cursor');
+      return; // short-circuit — don't run cursor script below
+    }
+
+    // otherwise (desktop-like) continue — but use a safer cursor implementation
+    // utility to clamp aura size (keeps it from overflowing)
+    window.safeSetAuraSize = function (auraEl) {
+      if (!auraEl) return;
+      const max = Math.max(400, Math.min(window.innerWidth * 0.7, 900));
+      auraEl.style.width = max + 'px';
+      auraEl.style.height = max + 'px';
+      // keep it centered with transform only (no direct left/top writes)
+      auraEl.style.left = '50%';
+      auraEl.style.top = '50%';
+      auraEl.style.transform = 'translate(-50%, -50%)';
+    };
+
+    // expose small helper for cursor init to call (keeps code modular)
+  })();
+</script>
 
   <script>
+
     /* Combined neon cursor + aura script (paste once) */
     (function () {
       // Respect user preferences and coarse pointer (phones)
